@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>主页</title>
+    <script src="js/jquery@3.3.1/jquery.js"></script>
+
+    <!--对比一下昨天写的blog里面的ajax 后面的那个script删掉i行不行-->
+    <!--这个是没用单独写一个文件，然后页面去执行。直接写在一个里面啦-->
+    <script>
+        $(function () {
+            $("#loginBtn").click(function () {
+                // 页面加载完开始执行   //按钮绑定点击事件
+                $.ajax({  // 发起请求 loginJson 但是页面不会跳转
+                    type:"post",
+                    url:"loginJson",
+                    //默认提交的格式是表单提交
+                    dataType:"json", //   响应体格式 后端返回一个json数据
+                    data:{   //表示要请求的数据
+                        username:$("#username").val(), // 紫色是是键 ，后面 $("#username").val 是值，但是值其实是在type里面放的，所以给type 加了一个键
+                        password:$("#password").val(),
+                    },
+                    //r = （success:true)
+                    success(r){ // 这是相应的内容（要转换成字符串）
+                       /* alert(JSON.stringify(r));*/
+                        if(r.success){
+                            $("#container").hide();
+                        }else {
+                            alert("用户名密码输入错误")
+                        }
+                    }
+                })
+
+            })
+        });
+    </script>
+
+
+
+</head>
+<body>
+
+<!--<div id="container">
+    &lt;!&ndash; name表示请求数据的键 &ndash;&gt;
+    用户名：<input id="username" type="text" name="username"><br>
+    密码：<input id="password" type="password" name="password"><br>
+    <input id="loginBtn" type="button" value="登录">
+</div>-->
+<div id="container"> <!-- 这个是表示隐藏用的-->
+<!--也就说name 后面写的= 就是键  表示的是请求数据的键-->
+用户名<input  id= "username" type="text" name="username">  <br> <!--这个name 就是表示键就是你postman 前面写的那个-->
+密码<input  id="password" type="password" name="password"> <br>
+<input  id="loginBtn" type="button" value="登录" > <!--button 只是普通的按钮--> <!-- onclick="login() 自己写js里面的方法-->
+</div>
+<!--登录成功后，会显示当前页面，到那时输入的用户名和密码消失了。体验感不好-->
+<!--想实现的操作是：登录成功后，隐藏掉密码框，没成功就再次输入-->
+<!--<form  method="post" action="login301">
+   &lt;!&ndash; 也就说name 后面写的= 就是键  表示的是请求数据的键&ndash;&gt;
+    用户名<input type="text" name="username">  <br> &lt;!&ndash;这个name 就是表示键就是你postman 前面写的那个&ndash;&gt;
+    密码<input type="password" name="password">
+    <input type="submit" value="登录"> &lt;!&ndash;button 只是普通的按钮，submit才会发起请求&ndash;&gt;
+</form>-->
+
+
+<p>第一篇文章</p>
+<p>第二篇文章</p>
+<p>第三篇文章</p>
+</body>
+</html>
