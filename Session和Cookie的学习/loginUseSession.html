@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+</head>
+<body>
+    <hr> <!--分割线-->
+    <!--请求login-->
+    <form  method="post" action="loginUseSession">
+        <!--也就说name 后面写的= 就是键  表示的是请求数据的键-->
+        用户名<input type="text" name="username">  <br> <!--这个name 就是表示键就是你postman 前面写的那个-->
+        密码<input type="password" name="password">
+        <input type="submit" value="登录"> <!--button 只是普通的按钮，submit才会发起请求-->
+    </form>
+    <hr>
+</body>
+</html>
+<!--ajax 前端发起请请求   form 表单-->
