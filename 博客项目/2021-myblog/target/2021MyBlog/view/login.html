@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆页面</title>
+    <!--写了这个就会在login.html抓到一个jquery的数据包 为什么要引入这个jquery？-->
+    <script  type="text/javascript" src="../static/jquery/jquery-1.12.4.js"></script>
+   <!-- 引入js文件 就表示javaScript-->
+    <script type="text/javascript" src="../js/app.js"></script>
+</head>
+<body>
+
+    <h2>用户登录</h2>
+   <!-- 如果路径是/ 那么他就会到view 下寻找login资源 ../返回上一级目录-->
+    <!--因为给了这个表单一个id，所以他会去执行ajax的异步请求的方式-->
+    <form  id = "login_info"   enctype="application/x-www-form-urlencoded">  <!--表单默认提交格式-->
+        <input id="username" type="text" name="username"  placeholder="请输入用户名"> <br>  <!--placeholder水印-->
+        <input id= "password" type="password" name="password" placeholder="请输入密码"> <br>
+        <input type="submit" value="登录" > <!-- value按钮的文字-->
+    </form>
+
+    <!--method="post" action="../login"-->
+</body>
+
+</html>
