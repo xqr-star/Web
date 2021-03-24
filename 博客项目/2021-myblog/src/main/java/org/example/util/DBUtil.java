@@ -23,15 +23,36 @@ public class DBUtil {
     private static final String URL="jdbc:mysql://localhost:3306/servlet_blog?user=root&password=13467289102&useUnicode=true&characterEncoding=UTF-8&useSSL=false";
 
     //创建连接池  连接对象 享元模式 -- 使用饿汉式的单例模式 进行改进
-    private static final DataSource DS = new MysqlDataSource();
-    //它的构造方法写成了一个静态代码块
-    static {
-        ( (MysqlDataSource)DS).setUrl(URL);//强制转换
-    }
 
-    //采用静态的方法，只会加载一次，没用采用模板模式来做，说是很复杂。
+
+    //多线程的状态下这种做法保证了单例 但是如果没有用数据库也会每new出来
+//    不管我有没有用这个DataSource对象，都会创建出来。
+//    private static final DataSource DS = new MysqlDataSource();
+//    它的构造方法写成了一个静态代码块
+//    static {
+//        ( (MysqlDataSource)DS).setUrl(URL);//强制转换
+//    }
+
+    //在需要我的示例对象的地方去调用我创建对象的方法
+    private static DataSource DS = null;
+    private static DataSource getDateSource(){
+        if(DS == null){
+            synchronized (DBUtil.class){
+                //双重if判断 之前的b线程判断过没有实例化但是枪锁失败 等到它重新拿到锁之后，还是要再次判断
+                if(DS == null){
+                    DS = new MysqlDataSource();
+                    ((MysqlDataSource)DS).setUrl(URL);
+                }
+            }
+        }
+        return DS;
+    }
+    //采用静态的方法，只会加载一次，没有采用模板模式来做，复杂。
+    //在需要用到实例化对象的地方new 保证指挥被new一次
     public static Connection getConnection(){
         try {
+            DS = DBUtil.getDateSource();
+            //通过数据库连接池获取获取连接对象这些连接时可以重复使用的
             return DS.getConnection();
         } catch (SQLException e) {
             //抛出自定义异常
